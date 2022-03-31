@@ -28,9 +28,17 @@ class Table extends Model
 
 
     //########################################### Scopes ###################################################
+    public function scopeCapacity($query,$capacity)
+    {
+        return $query->where('capacity','>=',$capacity);
+    }
 
 
     //########################################### Relations ################################################
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
 
 
 }

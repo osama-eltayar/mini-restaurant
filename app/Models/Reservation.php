@@ -16,7 +16,13 @@ class Reservation extends Model
     * @var array
     */
     protected $fillable = [
+        'table_id',
+        'customer_id',
+        'from',
+        'to',
     ];
+
+    protected $dates = ['from','to'];
 
     //########################################### Constants ################################################
 
@@ -28,6 +34,21 @@ class Reservation extends Model
 
 
     //########################################### Scopes ###################################################
+    public function scopeOverlap($query,$from,$to)
+    {
+        return $query->where(function ($query) use ($from, $to) {
+            $query->where(function ($query) use ($from) {
+                return $query->where('from', '<=', $from)
+                             ->where('to', '>=', $from);
+            })
+                  ->orWhere(function ($query) use ($to) {
+                      $query->where('from', '<=', $to)
+                            ->where('to', '>=', $to);
+                  })
+                  ->orWhereBetween('from', [$from, $to])
+                  ->orWhereBetween('to', [$from, $to]);
+        });
+    }
 
 
     //########################################### Relations ################################################

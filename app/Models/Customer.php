@@ -16,6 +16,7 @@ class Customer extends Model
     * @var array
     */
     protected $fillable = [
+        'name', 'phone'
     ];
 
     //########################################### Constants ################################################
@@ -31,6 +32,10 @@ class Customer extends Model
 
 
     //########################################### Relations ################################################
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
 
 
 }

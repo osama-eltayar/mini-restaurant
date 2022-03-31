@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\AvailableTableController;
+use App\Http\Controllers\Api\MealController;
+use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\ReservationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::resource('meals', MealController::class)->only('index');
+Route::resource('reservations', ReservationController::class)->only('store');
+Route::resource('orders', OrderController::class)->only('store');
+Route::get('available-tables', AvailableTableController::class);
