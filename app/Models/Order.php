@@ -16,6 +16,11 @@ class Order extends Model
     * @var array
     */
     protected $fillable = [
+        'table_id',
+        'reservation_id',
+        'customer_id',
+        'waiter_id',
+        'total_paid',
     ];
 
     //########################################### Constants ################################################
@@ -31,6 +36,30 @@ class Order extends Model
 
 
     //########################################### Relations ################################################
+    public function details()
+    {
+        return $this->belongsToMany(Meal::class,OrderDetails::class)->withPivot(['amount_to_pay'])->withTimestamps();
+    }
+
+    public function waiter()
+    {
+        return $this->belongsTo(Waiter::class);
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
+    public function reservation()
+    {
+        return $this->belongsTo(Reservation::class);
+    }
+
+    public function table()
+    {
+        return $this->belongsTo(Table::class);
+    }
 
 
 }

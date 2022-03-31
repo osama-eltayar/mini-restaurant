@@ -28,6 +28,10 @@ class Meal extends Model
 
 
     //########################################### Scopes ###################################################
+    public function scopeAvailable($query)
+    {
+        return $query->where('quantity_available','>',1);
+    }
 
 
     //########################################### Relations ################################################

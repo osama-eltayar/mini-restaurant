@@ -17,7 +17,7 @@ class CreateOrderDetailsTable extends Migration
             $table->id();
             $table->foreignId('order_id')->constrained();
             $table->foreignId('meal_id')->constrained();
-            $table->unsignedInteger('price');
+            $table->unsignedInteger('amount_to_pay');
 
             $table->timestamps();
         });
