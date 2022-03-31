@@ -10,16 +10,18 @@ class CheckAvailableTable implements Rule
 {
     private $from;
     private $to;
+    private $capacity;
 
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct($from,$to)
+    public function __construct($from,$to,$capacity)
     {
         $this->from = $from;
         $this->to = $to;
+        $this->capacity = $capacity;
     }
 
     /**
@@ -57,8 +59,9 @@ class CheckAvailableTable implements Rule
         if (! $from->isSameDay($to))
             return false ;
 
-        return !$table->reservations()
-                      ->overlap($from,$to)
-                      ->exists();
+
+        return ($table->capacity > $this->capacity) && !$table->reservations()
+                                                              ->overlap($from, $to)
+                                                              ->exists();
     }
 }
