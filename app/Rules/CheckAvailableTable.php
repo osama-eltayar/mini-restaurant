@@ -2,6 +2,7 @@
 
 namespace App\Rules;
 
+use App\Events\UnAvailableTableEvent;
 use App\Models\Table;
 use Carbon\Carbon;
 use Illuminate\Contracts\Validation\Rule;
@@ -60,8 +61,14 @@ class CheckAvailableTable implements Rule
             return false ;
 
 
-        return ($table->capacity > $this->capacity) && !$table->reservations()
-                                                              ->overlap($from, $to)
-                                                              ->exists();
+        if ($table->capacity < $this->capacity)
+            return false ;
+
+        if($table->reservations()->overlap($from, $to)->exists()){
+            event(new UnAvailableTableEvent(request('customer'),$table, $from, $to));
+            return false ;
+        }
+
+        return true;
     }
 }

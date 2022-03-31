@@ -16,8 +16,10 @@ class CustomerWaiting extends Model
     * @var array
     */
     protected $fillable = [
+        'customer_id', 'table_id', 'from', 'to'
     ];
 
+    protected $dates = ['from', 'to'];
     //########################################### Constants ################################################
 
 

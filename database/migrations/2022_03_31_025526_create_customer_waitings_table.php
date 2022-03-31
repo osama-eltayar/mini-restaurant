@@ -15,6 +15,10 @@ class CreateCustomerWaitingsTable extends Migration
     {
         Schema::create('customer_waitings', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('customer_id')->constrained();
+            $table->foreignId('table_id')->constrained();
+            $table->dateTime('from');
+            $table->dateTime('to');
             $table->timestamps();
         });
     }
