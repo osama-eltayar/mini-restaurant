@@ -1,6 +1,5 @@
-## Tiny Twitter API
+## mini-restaurant API
 
-tiny Twitter api
 ## Installation
 
 ```
